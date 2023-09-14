@@ -1,0 +1,12 @@
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\bin\Debug\net6.0\ProjectModel.deps.json
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\bin\Debug\net6.0\ProjectModel.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\bin\Debug\net6.0\ProjectModel.pdb
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ProjectModel.csproj.AssemblyReference.cache
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ProjectModel.GeneratedMSBuildEditorConfig.editorconfig
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ProjectModel.AssemblyInfoInputs.cache
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ProjectModel.AssemblyInfo.cs
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ProjectModel.csproj.CoreCompileInputs.cache
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ProjectModel.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\refint\ProjectModel.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ProjectModel.pdb
+E:\Documents\GitHub\FinancialManagementWeb_Backend\ProjectModel\obj\Debug\net6.0\ref\ProjectModel.dll

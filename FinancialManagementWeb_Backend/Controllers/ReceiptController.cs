@@ -1,0 +1,39 @@
+﻿using EntityFramework.Repository;
+using Microsoft.AspNetCore.Mvc;
+using ProjectModel.ReceiptComponents;
+
+namespace FinancialManagementWeb_Backend.Controllers
+{
+    [Route("api/receipt")]
+    [ApiController]
+    public class ReceiptController : ControllerBase
+    {
+        private readonly IDataRepository<Receipt> _receiptRepository;
+
+        public ReceiptController(IDataRepository<Receipt> receiptRepository)
+        {
+            _receiptRepository = receiptRepository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            IEnumerable<Receipt> receipts = await _receiptRepository.GetAll();
+            return Ok(receipts);
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Receipt receipt)
+        {
+            if (receipt == null)
+            {
+                return BadRequest("Employee is null.");
+            }
+            _receiptRepository.Add(receipt);
+            return CreatedAtRoute(
+                  "Get",
+                  new { Id = receipt.Id },
+                  receipt);
+        }
+    }
+}

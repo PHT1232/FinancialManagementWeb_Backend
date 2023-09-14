@@ -1,0 +1,17 @@
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.deps.json
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.pdb
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.csproj.AssemblyReference.cache
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.AssemblyInfoInputs.cache
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.AssemblyInfo.cs
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.csproj.CoreCompileInputs.cache
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.csproj.CopyComplete
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\refint\EntityFramework.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.pdb
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\ref\EntityFramework.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.runtimeconfig.json
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\ProjectModel.dll
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\ProjectModel.pdb
+E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.genruntimeconfig.cache
