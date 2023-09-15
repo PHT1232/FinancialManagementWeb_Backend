@@ -8,6 +8,7 @@
         public DateTime CreatedDate { get; set; }
         public int TotalQuantity { get; set; }
         public float Total { get; set; }
+        public Tags Tags { get; set; }
         public ReceiptItem[] Items { get; set; }
     }
 }
