@@ -1,4 +1,4 @@
-namespace FinancialManagementWeb_Backend
+namespace TeamManagementProject_Backend
 {
     public class WeatherForecast
     {

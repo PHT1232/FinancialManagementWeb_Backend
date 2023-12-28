@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectModel.ReceiptComponents;
 
-namespace FinancialManagementWeb_Backend.Controllers
+namespace TeamManagementProject_Backend.Controllers
 {
     [Route("api/receipt")]
     [ApiController]
@@ -32,7 +32,7 @@ namespace FinancialManagementWeb_Backend.Controllers
             _receiptRepository.Add(receipt);
             return CreatedAtRoute(
                   "Get",
-                  new { Id = receipt.Id },
+                  new { receipt.Id },
                   receipt);
         }
     }

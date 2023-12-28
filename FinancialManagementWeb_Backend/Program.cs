@@ -2,6 +2,10 @@ using EntityFramework.Repository;
 using EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using ProjectModel.ReceiptComponents;
+using ProjectModel.AuthModel;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjectDbContext>(opts => opts.UseSqlServer(builder.Configuration["ConnectionString:FinancialManagement"]));
 builder.Services.AddScoped<IDataRepository<Receipt>, ReceiptRepository>();
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ProjectDbContext>();
+
+builder.Services.AddAuthentication()
+    .AddIdentityServerJwt();
 
 var app = builder.Build();
 
@@ -24,6 +33,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication(); 
 
 app.UseAuthorization();
 

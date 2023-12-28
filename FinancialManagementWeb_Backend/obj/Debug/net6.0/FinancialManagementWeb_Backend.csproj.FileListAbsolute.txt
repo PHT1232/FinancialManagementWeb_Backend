@@ -89,3 +89,4 @@ E:\Documents\GitHub\FinancialManagementWeb_Backend\FinancialManagementWeb_Backen
 E:\Documents\GitHub\FinancialManagementWeb_Backend\FinancialManagementWeb_Backend\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 E:\Documents\GitHub\FinancialManagementWeb_Backend\FinancialManagementWeb_Backend\bin\Debug\net6.0\ProjectModel.dll
 E:\Documents\GitHub\FinancialManagementWeb_Backend\FinancialManagementWeb_Backend\bin\Debug\net6.0\ProjectModel.pdb
+E:\Documents\GitHub\FinancialManagementWeb_Backend\FinancialManagementWeb_Backend\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
