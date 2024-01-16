@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ProjectModel.ReceiptComponents;
 
 namespace EntityFramework
 {
-    public class ProjectDbContext : DbContext
+    public class ProjectDbContext : IdentityDbContext<IdentityUser>
     {
         public ProjectDbContext(DbContextOptions options) 
             : base(options) 
@@ -15,7 +17,7 @@ namespace EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

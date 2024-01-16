@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\TeamManagementProject_Backend.props" />
+</Project>

@@ -1,11 +1,13 @@
 ﻿using EntityFramework.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectModel.ReceiptComponents;
 
 namespace TeamManagementProject_Backend.Controllers
 {
-    [Route("api/receipt")]
+    [Authorize]
     [ApiController]
+    [Route("api/receipt")]
     public class ReceiptController : ControllerBase
     {
         private readonly IDataRepository<Receipt> _receiptRepository;
