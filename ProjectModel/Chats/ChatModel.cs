@@ -8,6 +8,8 @@ namespace ProjectModel.Chats
 {
     public class ChatModel
     {
+        public string UserSentId { get; set; }
+        public string UserOrGroupReceivedId { get; set; }
         public string ChatMessage { get; set; }
     }
 }

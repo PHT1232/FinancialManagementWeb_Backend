@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjectModel.Chats;
+using ProjectModel.Groups;
 using ProjectModel.ReceiptComponents;
 
 namespace EntityFramework
@@ -15,6 +16,7 @@ namespace EntityFramework
 
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<ReceiptItem> ReceiptItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

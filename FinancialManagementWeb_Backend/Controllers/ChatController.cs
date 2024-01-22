@@ -42,19 +42,23 @@ namespace TeamManagementProject_Backend.Controllers
             return Ok(new { Message = "Request Completed" });
         }
 
-        [Route("SendMessage")]
+        [Route("SendGroupMessage")]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Chat chat)
+        public async Task<IActionResult> SendGroupMessage([FromBody] ChatModel chatModel)
         {
-            if (chat == null)
+            if (chatModel == null)
             {
                 return BadRequest("Chat is null.");
             }
             try
             {
-                Chat chat1 = new Chat();
-                chat1.ChatMessage = chat.ChatMessage;
-                await _chatRepository.Add(chat1);
+                Chat chat = new Chat();
+                chat.UserSentId = chatModel.UserSentId;
+                chat.UserOrGroupReceivedId = chatModel.UserOrGroupReceivedId;
+                chat.ChatMessage = chatModel.ChatMessage;
+                chat.CreatedDate = new DateTime();
+                chat.ModifiedDate = new DateTime();
+                await _chatRepository.Add(chat);
             }
             catch (Exception ex)
             {
@@ -62,7 +66,7 @@ namespace TeamManagementProject_Backend.Controllers
             }
             var list = await _chatRepository.GetAll();
             await _hubContext.Clients.All.SendAsync("TransferChartData", list);
-            return Ok(chat);
+            return Ok();
         }
     }
 }
