@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectModel.Groups
+namespace EntityFramework.DbEntities.Groups
 {
     public class Group
     {

@@ -1,7 +1,7 @@
-﻿using EntityFramework.Repository;
+﻿using EntityFramework.DbEntities.ReceiptComponents;
+using EntityFramework.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjectModel.ReceiptComponents;
 
 namespace TeamManagementProject_Backend.Controllers
 {

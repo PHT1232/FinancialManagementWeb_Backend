@@ -12,6 +12,6 @@ namespace EntityFramework.Repository
         Task<TEntity> Get(long id);
         Task Add(TEntity entity);
         Task Update(TEntity entity, long id);
-        Task Delete(TEntity entity);
+        void Delete(TEntity entity);
     }
 }

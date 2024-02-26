@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProjectModel.Chats;
+﻿using EntityFramework.DbEntities.Chats;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace EntityFramework.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Chat entity)
+        public void Delete(Chat entity)
         {
 
             throw new NotImplementedException();

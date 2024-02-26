@@ -1,7 +1,7 @@
-﻿using EntityFramework.Repository;
+﻿using EntityFramework.DbEntities.Chats;
+using EntityFramework.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using ProjectModel.Chats;
 using TeamManagementProject_Backend.Controllers.HubClass;
 
 namespace TeamManagementProject_Backend.Controllers

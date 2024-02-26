@@ -73,6 +73,7 @@ namespace TeamManagementProject_Backend.Controllers
             IdentityUser user = new()
             {
                 UserName = model.UserName,
+                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
 

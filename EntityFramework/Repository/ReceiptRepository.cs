@@ -1,6 +1,6 @@
 ﻿using EntityFramework;
+using EntityFramework.DbEntities.ReceiptComponents;
 using Microsoft.EntityFrameworkCore;
-using ProjectModel.ReceiptComponents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace EntityFramework.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Delete(Receipt entity)
+        public void Delete(Receipt entity)
         {
             _dbContext.Receipts.Remove(entity);
             _dbContext.SaveChanges();

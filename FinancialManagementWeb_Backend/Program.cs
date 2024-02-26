@@ -1,15 +1,15 @@
 using EntityFramework.Repository;
 using EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using ProjectModel.ReceiptComponents;
 using ProjectModel.AuthModel;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using ProjectModel.Chats;
 using TeamManagementProject_Backend.Controllers.HubClass;
+using EntityFramework.DbEntities.ReceiptComponents;
+using EntityFramework.DbEntities.Chats;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -20,8 +20,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjectDbContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("FinancialManagement")));
-builder.Services.AddScoped<IDataRepository<Receipt>, ReceiptRepository>();
-builder.Services.AddScoped<IDataRepository<Chat>, ChatRepository>();
+//builder.Services.AddScoped<IDataRepository<Receipt>, ReceiptRepository>();
+//builder.Services.AddScoped<IDataRepository<Chat>, ChatRepository>();
+builder.Services.AddTransient<IDataRepository<Receipt>, ReceiptRepository>();
+builder.Services.AddTransient<IDataRepository<Chat>, ChatRepository>();
 
 builder.Services.AddSignalR(e => {
     e.MaximumReceiveMessageSize = 102400000;

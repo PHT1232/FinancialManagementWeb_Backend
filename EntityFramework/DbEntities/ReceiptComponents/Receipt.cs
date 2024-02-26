@@ -1,4 +1,4 @@
-﻿namespace ProjectModel.ReceiptComponents
+﻿namespace EntityFramework.DbEntities.ReceiptComponents
 {
     public class Receipt
     {
