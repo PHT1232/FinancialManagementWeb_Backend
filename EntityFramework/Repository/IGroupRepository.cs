@@ -14,6 +14,6 @@ namespace EntityFramework.Repository
         Task Add(Group entity);
         Task Update(Group entity, string id);
         void Delete(Group entity);
-        Task AddRoleForUser(string GroupId, string UserId);
+        Task AddUserToGroup(GroupUsers groupUser);
     }
 }

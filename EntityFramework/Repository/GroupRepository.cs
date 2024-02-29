@@ -23,6 +23,12 @@ namespace EntityFramework.Repository
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task AddUserToGroup(GroupUsers groupUser)
+        {
+            await _dbContext.GroupRoles.AddAsync(groupUser);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public void Delete(Group entity)
         {
             _dbContext.Groups.Remove(entity);

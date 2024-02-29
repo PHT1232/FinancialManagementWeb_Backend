@@ -18,7 +18,7 @@ namespace EntityFramework
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<ReceiptItem> ReceiptItems { get; set; }
-        public DbSet<GroupRoles> GroupRoles { get; set; }
+        public DbSet<GroupUsers> GroupRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
