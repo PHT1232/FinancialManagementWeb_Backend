@@ -32,5 +32,6 @@ namespace TeamManagementProject_Backend.Controllers
             })
             .ToArray();
         }
+
     }
 }

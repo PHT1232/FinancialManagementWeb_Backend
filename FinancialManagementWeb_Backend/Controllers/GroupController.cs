@@ -1,12 +1,15 @@
 ﻿using EntityFramework.DbEntities.Groups;
 using EntityFramework.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ProjectModel.GroupModels;
+using System.Text;
 
 namespace TeamManagementProject_Backend.Controllers
 {
+
     [Route("api/group")]
     [ApiController]
     public class GroupController : ControllerBase
@@ -18,6 +21,21 @@ namespace TeamManagementProject_Backend.Controllers
             _groupRepository = groupRepository;
         }
 
+        private string RandomString(int length)
+        {
+            Random random = new Random();
+            char offset = 'A';
+            var builder = new StringBuilder(length);
+            const int lettersOffset = 26;
+            for (int i = 0; i < length; i++) 
+            {
+                var @char = (char)random.Next(offset, offset + lettersOffset);
+                builder.Append(@char);
+            }
+
+            return builder.ToString();
+        }
+
         [Route("GetGroupById")]
         [HttpGet]
         public async Task<IActionResult> GetGroupById(string groupId) 
@@ -26,6 +44,10 @@ namespace TeamManagementProject_Backend.Controllers
             {
                 GetGroupModel groupModel = new GetGroupModel();
                 Group group = await _groupRepository.Get(groupId);
+                if (group == null)
+                {
+                    return new EmptyResult();
+                }
                 groupModel.Id = group.Id;
                 groupModel.Name = group.Name;
                 groupModel.Description = group.Description;
@@ -35,7 +57,7 @@ namespace TeamManagementProject_Backend.Controllers
                 return Ok(groupModel);
             } catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -46,7 +68,7 @@ namespace TeamManagementProject_Backend.Controllers
             try
             {
                 Group group = new Group();
-                group.Id = Guid.NewGuid().ToString();
+                group.Id = RandomString(5);
                 group.Name = groupModel.Name;
                 group.IconUrl = groupModel.IconUrl;
                 group.IsPublic = groupModel.IsPublic;
@@ -118,5 +140,6 @@ namespace TeamManagementProject_Backend.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }

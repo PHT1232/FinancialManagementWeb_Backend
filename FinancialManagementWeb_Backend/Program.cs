@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using TeamManagementProject_Backend.Controllers.HubClass;
 using EntityFramework.DbEntities.ReceiptComponents;
 using EntityFramework.DbEntities.Chats;
+using EntityFramework.DbEntities.Groups;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -24,6 +25,7 @@ builder.Services.AddDbContext<ProjectDbContext>(opts => opts.UseSqlServer(config
 //builder.Services.AddScoped<IDataRepository<Chat>, ChatRepository>();
 builder.Services.AddTransient<IDataRepository<Receipt>, ReceiptRepository>();
 builder.Services.AddTransient<IDataRepository<Chat>, ChatRepository>();
+builder.Services.AddTransient<IGroupRepository, GroupRepository>();
 
 builder.Services.AddSignalR(e => {
     e.MaximumReceiveMessageSize = 102400000;
@@ -77,7 +79,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();
 

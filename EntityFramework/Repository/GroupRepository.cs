@@ -25,7 +25,7 @@ namespace EntityFramework.Repository
 
         public async Task AddUserToGroup(GroupUsers groupUser)
         {
-            await _dbContext.GroupRoles.AddAsync(groupUser);
+            await _dbContext.GroupUsers.AddAsync(groupUser);
             await _dbContext.SaveChangesAsync();
         }
 
@@ -41,9 +41,16 @@ namespace EntityFramework.Repository
             return group;
         }
 
-        public Task<IEnumerable<Group>> GetAllByUserId(string UserId)
+        public async Task<IEnumerable<Group>> GetAllByUserId(string UserId)
         {
-            throw new NotImplementedException();
+            List<GroupUsers> groupUsers = await _dbContext.GroupUsers.Where(e => e.UserId.Equals(UserId)).ToListAsync();
+            List<Group> groups = new List<Group>();
+            foreach (var groupUser in groupUsers)
+            {
+                Group group = _dbContext.Groups.FirstOrDefault(e => e.Id.Equals(groupUser.GroupId));
+                groups.Add(group);
+            }
+            return groups;
         }
 
         public async Task Update(Group entity, string id)

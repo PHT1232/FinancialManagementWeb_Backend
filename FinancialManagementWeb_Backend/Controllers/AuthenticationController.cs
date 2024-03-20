@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ProjectModel.AuthModel;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -33,6 +35,10 @@ namespace TeamManagementProject_Backend.Controllers
         public async Task<IActionResult> Login([FromBody] ApplicationUser model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(model.UserName);
+            }
 
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -50,17 +56,21 @@ namespace TeamManagementProject_Backend.Controllers
                 }
 
                 var tokenString = GenerateJSONWebToken(authClaims);
-                return Ok(new
+                LoginInfo loginInfo = new LoginInfo()
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(tokenString),
-                    expiration = tokenString.ValidTo
-                });
+                    UserName = user.UserName,
+                    Token = new JwtSecurityTokenHandler().WriteToken(tokenString),
+                    Exp = tokenString.ValidTo,
+                };
+                return Ok(loginInfo);
+            } else
+            {
+                throw new ("Wrong password or username");
             }
-            return Unauthorized();
         }
 
+        [Authorize(Roles = ApplicationRole.Admin)]
         [Route("register")]
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] ApplicationUser model)
         {
@@ -86,6 +96,46 @@ namespace TeamManagementProject_Backend.Controllers
             return Ok("Register successful");
         }
 
+        [Route("admin-register")]
+        [HttpPost]
+        public async Task<IActionResult> RegisterAdmin([FromBody] ApplicationUser model)
+        {
+            var databaseUser = await _userManager.FindByNameAsync(model.UserName);
+            if (databaseUser != null)
+            {
+                return BadRequest("User exist");
+            }
+
+            IdentityUser user = new()
+            {
+                UserName = model.UserName,
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest("Register failed");
+            }
+
+            if (!await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+                await _roleManager.CreateAsync(new IdentityRole(ApplicationRole.Admin));
+            if (!await _roleManager.RoleExistsAsync(ApplicationRole.User))
+                await _roleManager.CreateAsync(new IdentityRole(ApplicationRole.User));
+
+            if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, ApplicationRole.Admin);
+            }
+            if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, ApplicationRole.User);
+            }
+            return Ok("User created successfully!");
+
+        }
+
         private JwtSecurityToken GenerateJSONWebToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
@@ -99,6 +149,14 @@ namespace TeamManagementProject_Backend.Controllers
                 );
 
             return token;
+        }
+
+        [AllowAnonymous]
+        [Route("GetErrored")]
+        [HttpGet]
+        public IActionResult Getbitch()
+        {
+            throw new Exception("Get Error");
         }
     }
 }

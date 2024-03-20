@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ProjectModel.AuthModel
 {
-    public class ApplicationUser
+    public class LoginInfo
     {
-        public string? Email { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
-        public string? Role { get; set; }
+        public string Token { get; set; }
+        public DateTime Exp {  get; set; }
+        public string Role { get; set; }
     }
 }
