@@ -14,5 +14,7 @@ namespace EntityFramework.DbEntities.Groups
         public string password { get; set; }
         public string Description { get; set; }
         public bool IsPublic { get; set; }
+        public DateTime Created { get; set; }
+        public string CreatorUsername { get; set; }
     }
 }

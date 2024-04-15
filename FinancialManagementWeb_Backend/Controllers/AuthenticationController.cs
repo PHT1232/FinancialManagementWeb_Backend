@@ -1,5 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -11,7 +10,6 @@ using System.Text;
 
 namespace TeamManagementProject_Backend.Controllers
 {
-
     [Route("api/authenticate")]
     [ApiController]
     public class AuthenticationController : ControllerBase
@@ -111,6 +109,7 @@ namespace TeamManagementProject_Backend.Controllers
                 UserName = model.UserName,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
+                
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
