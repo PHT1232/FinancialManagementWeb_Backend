@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFramework.Repository
+namespace EntityFramework.Repository.Groups
 {
     public interface IGroupRepository
     {

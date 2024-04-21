@@ -1,7 +1,12 @@
 ﻿using EntityFramework.DbEntities.Chats;
 using EntityFramework.Repository;
+using EntityFramework.Repository.Chats;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using ProjectModel.ChatModels;
 using TeamManagementProject_Backend.Controllers.HubClass;
 
 namespace TeamManagementProject_Backend.Controllers
@@ -10,16 +15,20 @@ namespace TeamManagementProject_Backend.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
-        private readonly IDataRepository<Chat> _chatRepository;
+        private readonly IChatRepository _chatRepository;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IHubContext<ChatHub> _hubContext;
 
-        public ChatController(IDataRepository<Chat> chatRepository
-            , IHubContext<ChatHub> hubContext)
+        public ChatController(IChatRepository chatRepository
+            , IHubContext<ChatHub> hubContext
+            , UserManager<IdentityUser> userManager)
         {
             _chatRepository = chatRepository;
             _hubContext = hubContext;
+            _userManager = userManager;
         }
 
+        [Authorize]
         [Route("GetAll")]
         [HttpGet]
         public async Task<IActionResult> GetAllChat()
@@ -28,6 +37,7 @@ namespace TeamManagementProject_Backend.Controllers
             return Ok(chats);
         }
 
+        [Authorize]
         [Route("Get")]
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -42,28 +52,29 @@ namespace TeamManagementProject_Backend.Controllers
             return Ok(new { Message = "Request Completed" });
         }
 
-        [Route("SendGroupMessage")]
+        [Authorize]
+        [Route("SendMessage")]
         [HttpPost]
-        public async Task<IActionResult> SendGroupMessage([FromBody] ChatModel chatModel)
+        public async Task<IActionResult> SendMessage([FromBody] ChatMessage chatModel)
         {
             if (chatModel == null)
             {
-                return BadRequest("Chat is null.");
+                throw new ("Chat is this real ?");
             }
-            try
+            var user = await _userManager.FindByNameAsync(chatModel.SentId);
+            if (user == null)
             {
-                Chat chat = new Chat();
-                chat.UserSentId = chatModel.UserSentId;
-                chat.UserOrGroupReceivedId = chatModel.UserOrGroupReceivedId;
-                chat.ChatMessage = chatModel.ChatMessage;
-                chat.CreatedDate = new DateTime();
-                chat.ModifiedDate = new DateTime();
-                await _chatRepository.Add(chat);
+                user = await _userManager.FindByEmailAsync(chatModel.SentId);
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            Chat chat = new Chat();
+            chat.UserSentId = chatModel.SentId;
+            chat.UserOrGroupReceivedId = chatModel.ReceivedId;
+            chat.ChatMessage = chatModel.Message;
+            chat.CreatedDate = new DateTime().Date;
+            chat.ModifiedDate = new DateTime().Date;
+            await _chatRepository.Add(chat);
+
             var list = await _chatRepository.GetAll();
             await _hubContext.Clients.All.SendAsync("TransferChartData", list);
             return Ok();

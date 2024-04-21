@@ -8,7 +8,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 
-namespace TeamManagementProject_Backend.Controllers
+namespace TeamManagementProject_Backend.Controllers.Authentication
 {
     [Route("api/authenticate")]
     [ApiController]
@@ -38,7 +38,8 @@ namespace TeamManagementProject_Backend.Controllers
                 user = await _userManager.FindByEmailAsync(model.UserName);
             }
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            var isRightPassword = await _userManager.CheckPasswordAsync(user, model.Password);
+            if (user != null && isRightPassword)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -54,16 +55,17 @@ namespace TeamManagementProject_Backend.Controllers
                 }
 
                 var tokenString = GenerateJSONWebToken(authClaims);
-                LoginInfo loginInfo = new LoginInfo()
+                TokenInfo loginInfo = new TokenInfo()
                 {
-                    UserName = user.UserName,
                     Token = new JwtSecurityTokenHandler().WriteToken(tokenString),
                     Exp = tokenString.ValidTo,
                 };
+
                 return Ok(loginInfo);
-            } else
+            }
+            else
             {
-                throw new ("Wrong password or username");
+                throw new("Sai mật khẩu hoặc tên người dùng");
             }
         }
 
@@ -75,7 +77,7 @@ namespace TeamManagementProject_Backend.Controllers
             var databaseUser = await _userManager.FindByNameAsync(model.UserName);
             if (databaseUser != null)
             {
-                return BadRequest("User exist");
+                throw new("Người dùng đã tồn tại");
             }
 
             IdentityUser user = new()
@@ -83,15 +85,18 @@ namespace TeamManagementProject_Backend.Controllers
                 UserName = model.UserName,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
+
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
+            await _userManager.AddToRoleAsync(user, ApplicationRole.User);
+
             if (!result.Succeeded)
             {
-                return BadRequest("Register failed");
+                throw new("Đăng ký thất bại");
             }
 
-            return Ok("Register successful");
+            return Ok("Tạo người dùng mới thành công!");
         }
 
         [Route("admin-register")]
@@ -101,7 +106,7 @@ namespace TeamManagementProject_Backend.Controllers
             var databaseUser = await _userManager.FindByNameAsync(model.UserName);
             if (databaseUser != null)
             {
-                return BadRequest("User exist");
+                throw new("Người dùng đã tồn tại");
             }
 
             IdentityUser user = new()
@@ -109,13 +114,13 @@ namespace TeamManagementProject_Backend.Controllers
                 UserName = model.UserName,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                
+
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                return BadRequest("Register failed");
+                throw new("Đăng ký thất bại");
             }
 
             if (!await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
@@ -131,7 +136,7 @@ namespace TeamManagementProject_Backend.Controllers
             {
                 await _userManager.AddToRoleAsync(user, ApplicationRole.User);
             }
-            return Ok("User created successfully!");
+            return Ok("Tạo người dùng mới thành công!");
 
         }
 
@@ -150,12 +155,5 @@ namespace TeamManagementProject_Backend.Controllers
             return token;
         }
 
-        [AllowAnonymous]
-        [Route("GetErrored")]
-        [HttpGet]
-        public IActionResult Getbitch()
-        {
-            throw new Exception("Get Error");
-        }
     }
 }

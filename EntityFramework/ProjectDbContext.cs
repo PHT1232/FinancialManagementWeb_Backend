@@ -1,5 +1,6 @@
 ﻿using EntityFramework.DbEntities.Chats;
 using EntityFramework.DbEntities.Groups;
+using EntityFramework.DbEntities.Pictures;
 using EntityFramework.DbEntities.ReceiptComponents;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -19,6 +20,8 @@ namespace EntityFramework
         public DbSet<Group> Groups { get; set; }
         public DbSet<ReceiptItem> ReceiptItems { get; set; }
         public DbSet<GroupUsers> GroupUsers { get; set; }
+        public DbSet<UserProfilePicture> UserProfilePicture { get; set; }
+        public DbSet<GroupProfilePicture> GroupProfilePicture { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

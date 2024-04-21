@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFramework.Repository
+namespace EntityFramework.Repository.Groups
 {
     public class GroupRepository : IGroupRepository
     {
@@ -38,6 +38,7 @@ namespace EntityFramework.Repository
         public async Task<Group> Get(string id)
         {
             Group group = await _dbContext.Groups.FirstOrDefaultAsync(e => e.Id == id);
+            
             return group;
         }
 
@@ -45,11 +46,13 @@ namespace EntityFramework.Repository
         {
             List<GroupUsers> groupUsers = await _dbContext.GroupUsers.Where(e => e.UserId.Equals(UserId)).ToListAsync();
             List<Group> groups = new List<Group>();
+
             foreach (var groupUser in groupUsers)
             {
                 Group group = _dbContext.Groups.FirstOrDefault(e => e.Id.Equals(groupUser.GroupId));
                 groups.Add(group);
             }
+            
             return groups;
         }
 

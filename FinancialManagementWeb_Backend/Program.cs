@@ -1,4 +1,3 @@
-using EntityFramework.Repository;
 using EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using ProjectModel.AuthModel;
@@ -11,6 +10,11 @@ using TeamManagementProject_Backend.Controllers.HubClass;
 using EntityFramework.DbEntities.ReceiptComponents;
 using EntityFramework.DbEntities.Chats;
 using EntityFramework.DbEntities.Groups;
+using EntityFramework.Repository.Chats;
+using EntityFramework.Repository.Groups;
+using Microsoft.Extensions.FileProviders;
+using EntityFramework.Repository.Pictures;
+using TeamManagementProject_Backend.Global;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -20,12 +24,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<ProjectDbContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("FinancialManagement")));
-//builder.Services.AddScoped<IDataRepository<Receipt>, ReceiptRepository>();
-//builder.Services.AddScoped<IDataRepository<Chat>, ChatRepository>();
-builder.Services.AddTransient<IDataRepository<Receipt>, ReceiptRepository>();
-builder.Services.AddTransient<IDataRepository<Chat>, ChatRepository>();
+builder.Services.AddTransient<IChatRepository, ChatRepository>();
 builder.Services.AddTransient<IGroupRepository, GroupRepository>();
+builder.Services.AddTransient<IPicturesRepository, PictureRepository>();
 
 builder.Services.AddSignalR(e => {
     e.MaximumReceiveMessageSize = 102400000;
@@ -71,6 +74,12 @@ builder.Services.AddCors(options =>
         .AllowCredentials());
 });
 
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(
+    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
+));
+
+AppFolders.Init(builder.Environment);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -79,6 +88,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseExceptionHandler("/error");
 
 app.UseHttpsRedirection();

@@ -1,4 +1,5 @@
 ﻿using EntityFramework.DbEntities.Chats;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFramework.Repository
+namespace EntityFramework.Repository.Chats
 {
-    public class ChatRepository : IDataRepository<Chat>
+    public class ChatRepository : IChatRepository
     {
         private ProjectDbContext _dbContext;
 
@@ -39,6 +40,14 @@ namespace EntityFramework.Repository
         {
             List<Chat> chats = await _dbContext.Chats.ToListAsync();
             return chats;
+        }
+
+        public async Task<IEnumerable<Chat>> GetRecentChatUser(string userId)
+        {
+            List<Chat> recentUserChat = await _dbContext.Chats
+                .Where(e => e.UserSentId == userId || e.UserOrGroupReceivedId == userId).ToListAsync();
+
+            return recentUserChat;
         }
 
         public async Task Update(Chat entity, long id)
