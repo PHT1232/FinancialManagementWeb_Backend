@@ -2,6 +2,7 @@
 using EntityFramework.Repository.Pictures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjectModel.UploadModels;
 using TeamManagementProject_Backend.Global;
 
 namespace TeamManagementProject_Backend.Controllers.Upload
@@ -21,28 +22,34 @@ namespace TeamManagementProject_Backend.Controllers.Upload
         }
 
         [HttpPost]
-        public async Task<IActionResult> UserProfileUpload(UserProfilePicture userProfile)
+        public async Task<IActionResult> UserProfileUpload(UserProfileModel userProfile)
         {
-            string fileFolderPath = Path.Combine(AppFolders.UserProfilePictures + @"/");
+            string filePath = Path.Combine(AppFolders.UserProfilePictures);
+
+            UserProfilePicture picture = new UserProfilePicture();
+            picture.Url = SingleUploadHandler(filePath);
+            picture.Username = userProfile.Username;
+            picture.Updated = DateTime.Now;
+
+            await _picturesRepository.AddUserProfile(picture);
 
             return Ok();
         }
 
-        private async Task<List<string>> UploadHandler(string fileFolderPath)
+        private string SingleUploadHandler(string filePath)
         {
-            List<string> files = new List<string>();
+            string fileFolderPath = "";
             
             if (Request.Form.Files == null || Request.Form.Files.Count == 0)
             {
-                return files;
-            }
-            
-            foreach (var file in Request.Form.Files)
-            {
-                files.Add(GlobalFunction.SaveFile(fileFolderPath, file));
+                return fileFolderPath;
             }
 
-            return await Task.FromResult(files);
+            var file = Request.Form.Files.Single();
+
+            fileFolderPath = GlobalFunction.SaveFile(filePath, file);
+
+            return fileFolderPath;
         }
     }
 }

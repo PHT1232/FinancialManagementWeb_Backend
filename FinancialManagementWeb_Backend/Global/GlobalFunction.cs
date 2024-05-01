@@ -15,6 +15,7 @@ namespace TeamManagementProject_Backend.Global
         public static string SaveFile(string folderPath, IFormFile importFile)
         {
             byte[] fileBytes;
+            
             using (var stream = importFile.OpenReadStream())
             {
                 fileBytes = GetAllBytes(stream);
@@ -22,14 +23,15 @@ namespace TeamManagementProject_Backend.Global
 
             string uploadFileName = importFile.FileName;
 
-            string uploadFilePath = Path.Combine(folderPath + @"/" + uploadFileName);
+            string uploadFilePath = Path.Combine(folderPath + @"\" + uploadFileName);
 
             if (!Directory.Exists(uploadFilePath))
             {
                 Directory.CreateDirectory(uploadFilePath);
             }
 
-            File.WriteAllBytes(uploadFilePath, fileBytes);
+            File.SetAttributes("D:/FinancialManagementWeb_Backend/FinancialManagementWeb_Backend/wwwroot/Pictures/Profile/Users", FileAttributes.Normal);
+            File.WriteAllBytes("D:/FinancialManagementWeb_Backend/FinancialManagementWeb_Backend/wwwroot/Pictures/Profile/Users", fileBytes);
 
             return uploadFileName;
         }
