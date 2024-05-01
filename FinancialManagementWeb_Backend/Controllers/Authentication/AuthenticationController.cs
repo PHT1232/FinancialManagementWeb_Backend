@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ProjectModel.AuthModel;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
-namespace TeamManagementProject_Backend.Controllers
+namespace TeamManagementProject_Backend.Controllers.Authentication
 {
-
     [Route("api/authenticate")]
     [ApiController]
     public class AuthenticationController : ControllerBase
@@ -33,8 +33,13 @@ namespace TeamManagementProject_Backend.Controllers
         public async Task<IActionResult> Login([FromBody] ApplicationUser model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(model.UserName);
+            }
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            var isRightPassword = await _userManager.CheckPasswordAsync(user, model.Password);
+            if (user != null && isRightPassword)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
 
@@ -50,39 +55,89 @@ namespace TeamManagementProject_Backend.Controllers
                 }
 
                 var tokenString = GenerateJSONWebToken(authClaims);
-                return Ok(new
+                TokenInfo loginInfo = new TokenInfo()
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(tokenString),
-                    expiration = tokenString.ValidTo
-                });
+                    Token = new JwtSecurityTokenHandler().WriteToken(tokenString),
+                    Exp = tokenString.ValidTo,
+                };
+
+                return Ok(loginInfo);
             }
-            return Unauthorized();
+            else
+            {
+                throw new("Sai mật khẩu hoặc tên người dùng");
+            }
         }
 
+        [Authorize(Roles = ApplicationRole.Admin)]
         [Route("register")]
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] ApplicationUser model)
         {
             var databaseUser = await _userManager.FindByNameAsync(model.UserName);
             if (databaseUser != null)
             {
-                return BadRequest("User exist");
+                throw new("Người dùng đã tồn tại");
             }
 
             IdentityUser user = new()
             {
                 UserName = model.UserName,
+                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
+
+            };
+
+            var result = await _userManager.CreateAsync(user, model.Password);
+            await _userManager.AddToRoleAsync(user, ApplicationRole.User);
+
+            if (!result.Succeeded)
+            {
+                throw new("Đăng ký thất bại");
+            }
+
+            return Ok("Tạo người dùng mới thành công!");
+        }
+
+        [Route("admin-register")]
+        [HttpPost]
+        public async Task<IActionResult> RegisterAdmin([FromBody] ApplicationUser model)
+        {
+            var databaseUser = await _userManager.FindByNameAsync(model.UserName);
+            if (databaseUser != null)
+            {
+                throw new("Người dùng đã tồn tại");
+            }
+
+            IdentityUser user = new()
+            {
+                UserName = model.UserName,
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                return BadRequest("Register failed");
+                throw new("Đăng ký thất bại");
             }
 
-            return Ok("Register successful");
+            if (!await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+                await _roleManager.CreateAsync(new IdentityRole(ApplicationRole.Admin));
+            if (!await _roleManager.RoleExistsAsync(ApplicationRole.User))
+                await _roleManager.CreateAsync(new IdentityRole(ApplicationRole.User));
+
+            if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, ApplicationRole.Admin);
+            }
+            if (await _roleManager.RoleExistsAsync(ApplicationRole.Admin))
+            {
+                await _userManager.AddToRoleAsync(user, ApplicationRole.User);
+            }
+            return Ok("Tạo người dùng mới thành công!");
+
         }
 
         private JwtSecurityToken GenerateJSONWebToken(List<Claim> authClaims)
@@ -99,5 +154,6 @@ namespace TeamManagementProject_Backend.Controllers
 
             return token;
         }
+
     }
 }

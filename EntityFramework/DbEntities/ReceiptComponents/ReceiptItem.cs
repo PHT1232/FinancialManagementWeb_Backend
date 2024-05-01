@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectModel.ReceiptComponents
+namespace EntityFramework.DbEntities.ReceiptComponents
 {
     public class ReceiptItem
     {

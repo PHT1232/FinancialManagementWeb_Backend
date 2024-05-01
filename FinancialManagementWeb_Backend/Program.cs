@@ -1,13 +1,20 @@
-using EntityFramework.Repository;
 using EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using ProjectModel.ReceiptComponents;
 using ProjectModel.AuthModel;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using TeamManagementProject_Backend.Controllers.HubClass;
+using EntityFramework.DbEntities.ReceiptComponents;
+using EntityFramework.DbEntities.Chats;
+using EntityFramework.DbEntities.Groups;
+using EntityFramework.Repository.Chats;
+using EntityFramework.Repository.Groups;
+using Microsoft.Extensions.FileProviders;
+using EntityFramework.Repository.Pictures;
+using TeamManagementProject_Backend.Global;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -17,12 +24,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<ProjectDbContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("FinancialManagement")));
-builder.Services.AddScoped<IDataRepository<Receipt>, ReceiptRepository>();
+builder.Services.AddTransient<IChatRepository, ChatRepository>();
+builder.Services.AddTransient<IGroupRepository, GroupRepository>();
+builder.Services.AddTransient<IPicturesRepository, PictureRepository>();
+
+builder.Services.AddSignalR(e => {
+    e.MaximumReceiveMessageSize = 102400000;
+});
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ProjectDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 0;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+});
 
 builder.Services.AddAuthentication(options =>
 {
@@ -43,6 +65,21 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder
+        .WithOrigins("http://localhost:4200")
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials());
+});
+
+builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(
+    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
+));
+
+AppFolders.Init(builder.Environment);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,12 +89,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler("/error");
+
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/api/chat");
 
 app.Run();

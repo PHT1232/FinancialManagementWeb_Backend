@@ -1,0 +1,9 @@
+
+*.vsidx
+*.dll
+*.dll
+*.pdb
+.vs/TeamManagementProject_Backend/v17/.suo
+.vs/
+Debug/
+*.cache
