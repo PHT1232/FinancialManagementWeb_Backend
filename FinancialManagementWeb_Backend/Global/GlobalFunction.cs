@@ -25,13 +25,21 @@ namespace TeamManagementProject_Backend.Global
 
             string uploadFilePath = Path.Combine(folderPath + @"\" + uploadFileName);
 
-            if (!Directory.Exists(uploadFilePath))
+            //if (!Directory.Exists(uploadFilePath))
+            //{
+            //    Directory.CreateDirectory(uploadFilePath);
+            //}
+
+            //FileStream fileStream = new FileStream(uploadFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+
+
+            using (FileStream fileStream = System.IO.File.Create(uploadFilePath))
             {
-                Directory.CreateDirectory(uploadFilePath);
+                importFile.CopyTo(fileStream);
             }
 
-            File.SetAttributes("D:/FinancialManagementWeb_Backend/FinancialManagementWeb_Backend/wwwroot/Pictures/Profile/Users", FileAttributes.Normal);
-            File.WriteAllBytes("D:/FinancialManagementWeb_Backend/FinancialManagementWeb_Backend/wwwroot/Pictures/Profile/Users", fileBytes);
+            //File.SetAttributes(AppFolders.UserProfilePictures, FileAttributes.Normal);
+            //File.WriteAllBytes(AppFolders.UserProfilePictures, fileBytes);
 
             return uploadFileName;
         }

@@ -24,7 +24,7 @@ namespace TeamManagementProject_Backend.Controllers.Upload
         [HttpPost]
         public async Task<IActionResult> UserProfileUpload(UserProfileModel userProfile)
         {
-            string filePath = Path.Combine(AppFolders.UserProfilePictures);
+            string filePath = Path.Combine(AppFolders.ProfilePictures);
 
             UserProfilePicture picture = new UserProfilePicture();
             picture.Url = SingleUploadHandler(filePath);

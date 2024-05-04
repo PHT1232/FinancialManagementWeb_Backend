@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using TeamManagementProject_Backend.Controllers.HubClass;
+using TeamManagementProject_Backend.Global;
 
 namespace TeamManagementProject_Backend.Controllers
 {
@@ -28,6 +29,14 @@ namespace TeamManagementProject_Backend.Controllers
         {
             IEnumerable<Chat> recentUserId = await _chatRepository.GetRecentChatUser(userId);
             return Ok(recentUserId);
+        }
+
+        [AllowAnonymous]
+        [Route("GetUploadFolder")]
+        [HttpGet]
+        public IActionResult GetUploadFolder()
+        {
+            return Ok(AppFolders.UserProfilePictures);
         }
     }
 }
