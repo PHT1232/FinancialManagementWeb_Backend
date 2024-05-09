@@ -1,4 +1,6 @@
-﻿namespace TeamManagementProject_Backend.Global
+﻿using Microsoft.Extensions.FileProviders;
+
+namespace TeamManagementProject_Backend.Global
 {
     public static class AppFolders
     {
@@ -11,11 +13,11 @@
 
         public static void Init(IWebHostEnvironment env)
         {
-            ProfilePictures = Path.Combine(env.WebRootPath, $"Pictures{Path.DirectorySeparatorChar}Profile");
+            ProfilePictures = Path.Combine(env.ContentRootPath, $"Pictures{Path.DirectorySeparatorChar}Profile");
             UserProfilePictures = Path.Combine(ProfilePictures, "Users");
             GroupProfilePictures = Path.Combine(ProfilePictures, "Groups");
 
-            ChatPictures = Path.Combine(env.WebRootPath, $"Pictures{Path.DirectorySeparatorChar}Chats");
+            ChatPictures = Path.Combine(env.ContentRootPath, $"Pictures{Path.DirectorySeparatorChar}Chats");
             PersonalChatPictures = Path.Combine(ChatPictures, "Personals");
             GroupChatPictures = Path.Combine(ChatPictures, "Groups");
 

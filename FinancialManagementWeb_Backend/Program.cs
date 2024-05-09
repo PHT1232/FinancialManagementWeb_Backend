@@ -74,10 +74,6 @@ builder.Services.AddCors(options =>
         .AllowCredentials());
 });
 
-builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(
-    Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
-));
-
 AppFolders.Init(builder.Environment);
 
 var app = builder.Build();

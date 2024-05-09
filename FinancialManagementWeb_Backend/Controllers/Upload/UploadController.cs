@@ -1,34 +1,41 @@
 ﻿using EntityFramework.DbEntities.Pictures;
 using EntityFramework.Repository.Pictures;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ProjectModel.UploadModels;
 using TeamManagementProject_Backend.Global;
 
 namespace TeamManagementProject_Backend.Controllers.Upload
 {
-    /// <summary>
-    /// make this into a repository
-    /// </summary>
     [Authorize]
     [Route("api/upload/[action]")]
     public class UploadController : ControllerBase
     {
-        private IPicturesRepository _picturesRepository;
+        private readonly IPicturesRepository _picturesRepository;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public UploadController(IPicturesRepository picturesRepository) 
+        public UploadController(IPicturesRepository picturesRepository
+            , UserManager<IdentityUser> userManager) 
         {
             _picturesRepository = picturesRepository;
+            _userManager = userManager;
         }
 
         [HttpPost]
-        public async Task<IActionResult> UserProfileUpload(UserProfileModel userProfile)
+        public async Task<IActionResult> UserProfileUpload(string username)
         {
-            string filePath = Path.Combine(AppFolders.ProfilePictures);
+            var validateUser = await _userManager.FindByNameAsync(username);
+
+            if (validateUser == null)
+            {
+                throw new Exception("Không tồn tại người dùng!");
+            }
+
+            string filePath = Path.Combine(AppFolders.UserProfilePictures, validateUser.Id);
 
             UserProfilePicture picture = new UserProfilePicture();
             picture.Url = SingleUploadHandler(filePath);
-            picture.Username = userProfile.Username;
+            picture.UserId = validateUser.Id;
             picture.Updated = DateTime.Now;
 
             await _picturesRepository.AddUserProfile(picture);

@@ -80,6 +80,12 @@ namespace TeamManagementProject_Backend.Controllers.Authentication
                 throw new("Người dùng đã tồn tại");
             }
 
+            databaseUser = await _userManager.FindByEmailAsync(model.Email);
+            if (databaseUser != null)
+            {
+                throw new("Email này đã được sử dụng");
+            }
+
             IdentityUser user = new()
             {
                 UserName = model.UserName,

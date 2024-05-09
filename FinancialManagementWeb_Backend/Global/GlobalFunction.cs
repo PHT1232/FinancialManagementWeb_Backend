@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Net;
+using System.Runtime.InteropServices;
 
 namespace TeamManagementProject_Backend.Global
 {
@@ -14,34 +16,28 @@ namespace TeamManagementProject_Backend.Global
 
         public static string SaveFile(string folderPath, IFormFile importFile)
         {
-            byte[] fileBytes;
-            
-            using (var stream = importFile.OpenReadStream())
+            if (!Directory.Exists(folderPath))
             {
-                fileBytes = GetAllBytes(stream);
+                Directory.CreateDirectory(folderPath);
             }
 
-            string uploadFileName = importFile.FileName;
+            string extension = Path.GetExtension(importFile.FileName);
 
-            string uploadFilePath = Path.Combine(folderPath + @"\" + uploadFileName);
+            string trustedFileNameForFileStorage = string.Format("{0}." + extension, Path.GetRandomFileName().Replace(".", string.Empty));
 
-            //if (!Directory.Exists(uploadFilePath))
-            //{
-            //    Directory.CreateDirectory(uploadFilePath);
-            //}
+            string uploadFilePath = Path.Combine(folderPath, trustedFileNameForFileStorage);
 
-            //FileStream fileStream = new FileStream(uploadFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
-
-
-            using (FileStream fileStream = System.IO.File.Create(uploadFilePath))
+            using (FileStream fileStream = File.Create(uploadFilePath))
             {
                 importFile.CopyTo(fileStream);
             }
 
-            //File.SetAttributes(AppFolders.UserProfilePictures, FileAttributes.Normal);
-            //File.WriteAllBytes(AppFolders.UserProfilePictures, fileBytes);
+            return uploadFilePath;
+        }
 
-            return uploadFileName;
+        public static void DeleteFile(string filePath)
+        {
+
         }
     }
 }
