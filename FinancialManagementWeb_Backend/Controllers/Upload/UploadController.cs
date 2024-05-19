@@ -43,6 +43,14 @@ namespace TeamManagementProject_Backend.Controllers.Upload
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult Delete(string filePath)
+        {
+            GlobalFunction.DeleteFile(filePath);
+
+            return Ok();
+        }
+
         private string SingleUploadHandler(string filePath)
         {
             string fileFolderPath = "";
