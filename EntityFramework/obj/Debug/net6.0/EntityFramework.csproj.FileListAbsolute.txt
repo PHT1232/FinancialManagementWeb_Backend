@@ -1,17 +1,34 @@
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.deps.json
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.dll
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.pdb
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.csproj.AssemblyReference.cache
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.AssemblyInfoInputs.cache
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.AssemblyInfo.cs
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.csproj.CoreCompileInputs.cache
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.csproj.CopyComplete
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.dll
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\refint\EntityFramework.dll
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.pdb
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\ref\EntityFramework.dll
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\EntityFramework.runtimeconfig.json
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\ProjectModel.dll
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\bin\Debug\net6.0\ProjectModel.pdb
-E:\Documents\GitHub\FinancialManagementWeb_Backend\EntityFramework\obj\Debug\net6.0\EntityFramework.genruntimeconfig.cache
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.deps.json
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.dll
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.pdb
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.csproj.AssemblyReference.cache
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.AssemblyInfoInputs.cache
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.AssemblyInfo.cs
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.csproj.CoreCompileInputs.cache
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.csproj.CopyComplete
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.dll
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/refint/EntityFramework.dll
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.pdb
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/ref/EntityFramework.dll
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.runtimeconfig.json
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/ProjectModel.dll
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/ProjectModel.pdb
+E:/Documents/GitHub/FinancialManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.genruntimeconfig.cache
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.deps.json
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.runtimeconfig.json
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.dll
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/ref/EntityFramework.dll
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/EntityFramework.pdb
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/ProjectModel.dll
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/bin/Debug/net6.0/ProjectModel.pdb
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.csproj.AssemblyReference.cache
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.GeneratedMSBuildEditorConfig.editorconfig
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.AssemblyInfoInputs.cache
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.AssemblyInfo.cs
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.csproj.CoreCompileInputs.cache
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.csproj.CopyComplete
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.dll
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/ref/EntityFramework.dll
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.pdb
+/run/media/phat/New Volume/Documents/GitHub/TeamManagementWeb_Backend/EntityFramework/obj/Debug/net6.0/EntityFramework.genruntimeconfig.cache
