@@ -42,12 +42,17 @@ namespace EntityFramework.Repository.Chats
             return chats;
         }
 
-        public async Task<IEnumerable<Chat>> GetRecentChatUser(string userId)
+        public async Task<IEnumerable<IdentityUser>> GetRecentChatUser(string userId)
         {
-            List<Chat> recentUserChat = await _dbContext.Chats
-                .Where(e => e.UserSentId == userId || e.UserOrGroupReceivedId == userId).ToListAsync();
+            List<IdentityUser> recentUserFromChatRepo = await _dbContext.Chats
+                .Where(e => e.UserSentId == userId || e.UserOrGroupReceivedId == userId)
+                .Select(e => new IdentityUser 
+                { 
+                    Id = e.UserSentId == null ? e.UserOrGroupReceivedId : e.UserSentId
+                })
+                .ToListAsync();
 
-            return recentUserChat;
+            return recentUserFromChatRepo;
         }
 
         public async Task Update(Chat entity, long id)

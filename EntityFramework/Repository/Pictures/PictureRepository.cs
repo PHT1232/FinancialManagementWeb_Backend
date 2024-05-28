@@ -1,4 +1,5 @@
 ﻿using EntityFramework.DbEntities.Pictures;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,16 @@ namespace EntityFramework.Repository.Pictures
         {
             await _dbContext.UserProfilePicture.AddAsync(picture);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<string> GetProfilePicture(string userId) {
+            var profilePicture = await _dbContext.UserProfilePicture.FirstOrDefaultAsync(e => e.UserId == userId);
+            return profilePicture.Url;
+        }
+
+        public async Task<List<UserProfilePicture>> GetAll() {
+            var userProfile = await _dbContext.UserProfilePicture.ToListAsync();
+            return userProfile;
         }
     }
 }

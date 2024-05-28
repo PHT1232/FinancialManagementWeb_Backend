@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using ProjectModel.ChatModels;
-using TeamManagementProject_Backend.Controllers.HubClass;
+using TeamManagementProject_Backend.Controllers.Hubs;
 
 namespace TeamManagementProject_Backend.Controllers
 {
@@ -76,7 +76,7 @@ namespace TeamManagementProject_Backend.Controllers
             await _chatRepository.Add(chat);
 
             var list = await _chatRepository.GetAll();
-            await _hubContext.Clients.All.SendAsync("TransferChartData", list);
+            await _hubContext.Clients.User(chatModel.SentId).SendAsync("TransferChartData", list);
             return Ok();
         }
     }

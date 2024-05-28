@@ -12,9 +12,6 @@ namespace TeamManagementProject_Backend.Controllers
         {
             var exceptionFeature = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
 
-            // Get which route the exception occurred at
-            string routeWhereExceptionOccurred = exceptionFeature.Path;
-
             // Get the exception that occurred
             Exception exceptionThatOccurred = exceptionFeature.Error;
 

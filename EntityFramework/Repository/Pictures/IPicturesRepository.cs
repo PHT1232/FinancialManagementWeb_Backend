@@ -11,5 +11,7 @@ namespace EntityFramework.Repository.Pictures
     {
         Task AddGroupProfile(GroupProfilePicture picture);
         Task AddUserProfile(UserProfilePicture picture);
+        Task<string> GetProfilePicture(string userId);
+        Task<List<UserProfilePicture>> GetAll();
     }
 }

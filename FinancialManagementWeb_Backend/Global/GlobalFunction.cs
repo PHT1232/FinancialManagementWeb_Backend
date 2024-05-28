@@ -32,7 +32,7 @@ namespace TeamManagementProject_Backend.Global
                 importFile.CopyTo(fileStream);
             }
 
-            return uploadFilePath;
+            return trustedFileNameForFileStorage;
         }
 
         public static void DeleteFile(string filePath)

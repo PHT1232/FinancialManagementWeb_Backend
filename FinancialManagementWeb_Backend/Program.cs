@@ -6,7 +6,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using TeamManagementProject_Backend.Controllers.HubClass;
+using TeamManagementProject_Backend.Controllers.Hubs;
 using EntityFramework.DbEntities.ReceiptComponents;
 using EntityFramework.DbEntities.Chats;
 using EntityFramework.DbEntities.Groups;

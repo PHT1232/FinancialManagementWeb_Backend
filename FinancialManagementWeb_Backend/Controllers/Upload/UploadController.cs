@@ -53,18 +53,18 @@ namespace TeamManagementProject_Backend.Controllers.Upload
 
         private string SingleUploadHandler(string filePath)
         {
-            string fileFolderPath = "";
+            string fileNameForUpload = "";
             
             if (Request.Form.Files == null || Request.Form.Files.Count == 0)
             {
-                return fileFolderPath;
+                return fileNameForUpload;
             }
 
             var file = Request.Form.Files.Single();
 
-            fileFolderPath = GlobalFunction.SaveFile(filePath, file);
+            fileNameForUpload = GlobalFunction.SaveFile(filePath, file);
 
-            return fileFolderPath;
+            return fileNameForUpload;
         }
     }
 }
