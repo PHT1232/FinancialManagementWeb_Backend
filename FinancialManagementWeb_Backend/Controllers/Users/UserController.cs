@@ -11,7 +11,6 @@ using ProjectModel.AuthModel;
 
 namespace TeamManagementProject_Backend.Controllers.Users 
 {
-    [Authorize(Roles = ApplicationRole.Admin)]
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase {
@@ -31,6 +30,7 @@ namespace TeamManagementProject_Backend.Controllers.Users
             _config = config;
         }
     
+        [Authorize(Roles = ApplicationRole.Admin)]
         [Route("register")]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] ApplicationUser model)
@@ -66,6 +66,7 @@ namespace TeamManagementProject_Backend.Controllers.Users
             return Ok("Tạo người dùng mới thành công!");
         }
 
+        [Authorize(Roles = ApplicationRole.Admin)]
         [Route("admin-register")]
         [HttpPost]
         public async Task<IActionResult> RegisterAdmin([FromBody] ApplicationUser model)
@@ -106,6 +107,7 @@ namespace TeamManagementProject_Backend.Controllers.Users
             return Ok("Tạo người dùng mới thành công!");
         }
 
+        [Authorize(Roles = ApplicationRole.Admin)]
         [Route("GetUsersForDisplay")]
         [HttpGet]
         public async Task<IActionResult> GetUsersForDisplay() 
@@ -132,12 +134,12 @@ namespace TeamManagementProject_Backend.Controllers.Users
             return Ok(userDisplays);   
         }
 
-        [Authorize(Roles = ApplicationRole.User)]
+        // [Authorize(Roles = ApplicationRole.User)]
         [Route("SearchUsers")]
         [HttpGet]
         public async Task<IActionResult> SearchUsers(string searchValues) {
-            var users = await _userManager.Users.Where(user => user.UserName == searchValues || user.Email == searchValues || user.Id == searchValues).ToListAsync();
-
+            var users = await _userManager.Users.Where(user => user.UserName.Contains(searchValues) || user.Email.Contains(searchValues) || user.Id.Contains(searchValues)).ToListAsync();
+            // var users = await _userManager.Users.Where(user => user.UserName.Contains(searchValues)).ToListAsync();
             var userDisplays = new List<UserDisplay>();
 
             foreach (var user in users) {
