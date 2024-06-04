@@ -20,5 +20,14 @@ namespace TeamManagementProject_Backend.Controllers.File
             var file = File(buffer, "image/jpeg");
             return file;
         }
+    
+        [HttpGet]
+        public IActionResult GetUserProfile(string user, string fileName) {
+            string filePath = Path.Combine(AppFolders.UserProfilePictures + "/" + user, fileName);
+
+            byte[] buffer = System.IO.File.ReadAllBytes(filePath);
+            var file = File(buffer, "image/jpeg");
+            return file;
+        }
     }
 }

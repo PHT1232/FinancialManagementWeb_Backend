@@ -67,12 +67,14 @@ namespace TeamManagementProject_Backend.Controllers
                 user = await _userManager.FindByEmailAsync(chatModel.SentId);
             }
 
-            Chat chat = new Chat();
-            chat.UserSentId = chatModel.SentId;
-            chat.UserOrGroupReceivedId = chatModel.ReceivedId;
-            chat.ChatMessage = chatModel.Message;
-            chat.CreatedDate = new DateTime().Date;
-            chat.ModifiedDate = new DateTime().Date;
+            Chat chat = new Chat
+            {
+                UserSentId = chatModel.SentId,
+                UserOrGroupReceivedId = chatModel.ReceivedId,
+                ChatMessage = chatModel.Message,
+                CreatedDate = new DateTime().Date,
+                ModifiedDate = new DateTime().Date
+            };
             await _chatRepository.Add(chat);
 
             var list = await _chatRepository.GetAll();

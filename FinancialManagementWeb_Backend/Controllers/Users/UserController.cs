@@ -111,20 +111,51 @@ namespace TeamManagementProject_Backend.Controllers.Users
         public async Task<IActionResult> GetUsersForDisplay() 
         {
             var users = await _userManager.GetUsersInRoleAsync(ApplicationRole.User);
-            var pictures = await _picturesRepository.GetAll();
 
-            var UserDisplay = from user in users
-                             join picture in pictures
-                             on user.Id equals picture.UserId
-                             select new UserDisplay{
+            var userDisplays = new List<UserDisplay>();
+
+            foreach (var user in users) {
+                try {
+                    var picture = await _picturesRepository.GetProfilePicture(user.Id);
+                    userDisplays.Add(new UserDisplay{
                                 UserId = user.Id,
                                 Email = user.Email,
                                 UserName = user.UserName,
-                                UserProfile = picture.Url,
+                                UserProfile = picture,
                                 Role = "User",
-                             };
+                             });
+                } catch (Exception) {
+                    continue;
+                }
+            }
 
-            return Ok(UserDisplay);   
+            return Ok(userDisplays);   
+        }
+
+        [Authorize(Roles = ApplicationRole.User)]
+        [Route("SearchUsers")]
+        [HttpGet]
+        public async Task<IActionResult> SearchUsers(string searchValues) {
+            var users = await _userManager.Users.Where(user => user.UserName == searchValues || user.Email == searchValues || user.Id == searchValues).ToListAsync();
+
+            var userDisplays = new List<UserDisplay>();
+
+            foreach (var user in users) {
+                try {
+                    var picture = await _picturesRepository.GetProfilePicture(user.Id);
+                    userDisplays.Add(new UserDisplay{
+                                UserId = user.Id,
+                                Email = user.Email,
+                                UserName = user.UserName,
+                                UserProfile = picture,
+                                Role = "User",
+                             });
+                } catch (Exception) {
+                    continue;
+                }
+            }
+
+            return Ok(userDisplays);
         }
     }
 }
