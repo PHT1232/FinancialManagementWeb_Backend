@@ -28,14 +28,14 @@ namespace TeamManagementProject_Backend.Controllers
             _userManager = userManager;
         }
 
-        [Authorize]
-        [Route("GetAll")]
-        [HttpGet]
-        public async Task<IActionResult> GetAllChat()
-        {
-            IEnumerable<Chat> chats = await _chatRepository.GetAll();
-            return Ok(chats);
-        }
+        // [Authorize]
+        // [Route("GetAll")]
+        // [HttpGet]
+        // public async Task<IActionResult> GetAllChat()
+        // {
+        //     IEnumerable<Chat> chats = await _chatRepository.GetAll();
+        //     return Ok(chats);
+        // }
 
         [Authorize]
         [Route("Get")]
@@ -52,34 +52,34 @@ namespace TeamManagementProject_Backend.Controllers
             return Ok(new { Message = "Request Completed" });
         }
 
-        [Authorize]
-        [Route("SendMessage")]
-        [HttpPost]
-        public async Task<IActionResult> SendMessage([FromBody] ChatMessage chatModel)
-        {
-            if (chatModel == null)
-            {
-                throw new ("Chat is this real ?");
-            }
-            var user = await _userManager.FindByNameAsync(chatModel.SentId);
-            if (user == null)
-            {
-                user = await _userManager.FindByEmailAsync(chatModel.SentId);
-            }
+        // [Authorize]
+        // [Route("SendMessage")]
+        // [HttpPost]
+        // public async Task<IActionResult> SendMessage([FromBody] ChatMessage chatModel)
+        // {
+        //     if (chatModel == null)
+        //     {
+        //         throw new ("Chat is this real ?");
+        //     }
+        //     var user = await _userManager.FindByNameAsync(chatModel.SentId);
+        //     if (user == null)
+        //     {
+        //         user = await _userManager.FindByEmailAsync(chatModel.SentId);
+        //     }
 
-            Chat chat = new Chat
-            {
-                UserSentId = chatModel.SentId,
-                UserOrGroupReceivedId = chatModel.ReceivedId,
-                ChatMessage = chatModel.Message,
-                CreatedDate = new DateTime().Date,
-                ModifiedDate = new DateTime().Date
-            };
-            await _chatRepository.Add(chat);
+        //     Chat chat = new Chat
+        //     {
+        //         UserSentId = chatModel.SentId,
+        //         UserOrGroupReceivedId = chatModel.ReceivedId,
+        //         ChatMessage = chatModel.Message,
+        //         CreatedDate = new DateTime().Date,
+        //         ModifiedDate = new DateTime().Date
+        //     };
+        //     await _chatRepository.Add(chat);
 
-            var list = await _chatRepository.GetAll();
-            await _hubContext.Clients.User(chatModel.SentId).SendAsync("TransferChartData", list);
-            return Ok();
-        }
+        //     var list = await _chatRepository.GetAll();
+        //     await _hubContext.Clients.User(chatModel.SentId).SendAsync("TransferChartData", list);
+        //     return Ok();
+        // }
     }
 }

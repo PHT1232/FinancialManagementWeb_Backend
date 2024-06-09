@@ -133,31 +133,5 @@ namespace TeamManagementProject_Backend.Controllers.Users
 
             return Ok(userDisplays);   
         }
-
-        // [Authorize(Roles = ApplicationRole.User)]
-        [Route("SearchUsers")]
-        [HttpGet]
-        public async Task<IActionResult> SearchUsers(string searchValues) {
-            var users = await _userManager.Users.Where(user => user.UserName.Contains(searchValues) || user.Email.Contains(searchValues) || user.Id.Contains(searchValues)).ToListAsync();
-            // var users = await _userManager.Users.Where(user => user.UserName.Contains(searchValues)).ToListAsync();
-            var userDisplays = new List<UserDisplay>();
-
-            foreach (var user in users) {
-                try {
-                    var picture = await _picturesRepository.GetProfilePicture(user.Id);
-                    userDisplays.Add(new UserDisplay{
-                                UserId = user.Id,
-                                Email = user.Email,
-                                UserName = user.UserName,
-                                UserProfile = picture,
-                                Role = "User",
-                             });
-                } catch (Exception) {
-                    continue;
-                }
-            }
-
-            return Ok(userDisplays);
-        }
     }
 }

@@ -18,44 +18,46 @@ namespace EntityFramework.Repository.Chats
             _dbContext = dbContext;
         }
 
-        public async Task Add(Chat entity)
+        public async Task Add(ChatMessages entity)
         {
             await _dbContext.Chats.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
         }
 
-        public void Delete(Chat entity)
+        public void Delete(ChatMessages entity)
         {
 
             throw new NotImplementedException();
         }
 
-        public async Task<Chat> Get(long id)
+        public async Task<ChatMessages> Get(long id)
         {
-            Chat chat = await _dbContext.Chats.FirstOrDefaultAsync(x => x.Id == id);
+            ChatMessages chat = await _dbContext.Chats.FirstOrDefaultAsync(x => x.Id == id);
             return chat;
         }
 
-        public async Task<IEnumerable<Chat>> GetAll()
+        public async Task<IEnumerable<ChatMessages>> GetAll()
         {
-            List<Chat> chats = await _dbContext.Chats.ToListAsync();
+            List<ChatMessages> chats = await _dbContext.Chats.ToListAsync();
             return chats;
         }
 
-        public async Task<IEnumerable<IdentityUser>> GetRecentChatUser(string userId)
+        public async Task<IEnumerable<ChatSession>> GetRecentChatUser(string userId)
         {
-            List<IdentityUser> recentUserFromChatRepo = await _dbContext.Chats
-                .Where(e => e.UserSentId == userId || e.UserOrGroupReceivedId == userId)
-                .Select(e => new IdentityUser 
+            List<ChatSession> recentUserFromChatRepo = await _dbContext.ChatSession
+                .Where(e => e.FirstUserId == userId || e.SecondUserId == userId)
+                .Select(e => new ChatSession 
                 { 
-                    Id = e.UserSentId == null ? e.UserOrGroupReceivedId : e.UserSentId
+                    Id = 
                 })
                 .ToListAsync();
 
             return recentUserFromChatRepo;
         }
 
-        public async Task Update(Chat entity, long id)
+        public async Task<IEnumerable> 
+
+        public async Task Update(ChatMessages entity, long id)
         {
             throw new NotImplementedException();
         }

@@ -16,7 +16,8 @@ namespace EntityFramework
         }
 
         public DbSet<Receipt> Receipts { get; set; }
-        public DbSet<Chat> Chats { get; set; }
+        public DbSet<ChatMessages> Chats { get; set; }
+        public DbSet<ChatSession> ChatSession { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<ReceiptItem> ReceiptItems { get; set; }
         public DbSet<GroupUsers> GroupUsers { get; set; }

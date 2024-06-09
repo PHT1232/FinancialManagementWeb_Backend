@@ -10,11 +10,11 @@ namespace EntityFramework.Repository.Chats
 {
     public interface IChatRepository
     {
-        Task<IEnumerable<Chat>> GetAll();
-        Task<Chat> Get(long id);
-        Task<IEnumerable<IdentityUser>> GetRecentChatUser(string userId);
-        Task Add(Chat entity);
-        Task Update(Chat entity, long id);
-        void Delete(Chat entity);
+        Task<IEnumerable<ChatMessages>> GetAll();
+        Task<ChatMessages> Get(long id);
+        Task<IEnumerable<ChatSession>> GetRecentChatUser(string userId);
+        Task Add(ChatMessages entity);
+        Task Update(ChatMessages entity, long id);
+        void Delete(ChatMessages entity);
     }
 }
