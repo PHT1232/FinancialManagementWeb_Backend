@@ -6,6 +6,7 @@ namespace TeamManagementProject_Backend.Global
     {
         public static string ProfilePictures;
         public static string UserProfilePictures;
+        public static string UserDefaultProfilePictures;
         public static string GroupProfilePictures;
         public static string ChatPictures;
         public static string PersonalChatPictures;
@@ -15,6 +16,7 @@ namespace TeamManagementProject_Backend.Global
         {
             ProfilePictures = Path.Combine(env.ContentRootPath, $"Pictures{Path.DirectorySeparatorChar}Profile");
             UserProfilePictures = Path.Combine(ProfilePictures, "Users");
+            UserDefaultProfilePictures = Path.Combine(UserProfilePictures, "Default");
             GroupProfilePictures = Path.Combine(ProfilePictures, "Groups");
 
             ChatPictures = Path.Combine(env.ContentRootPath, $"Pictures{Path.DirectorySeparatorChar}Chats");

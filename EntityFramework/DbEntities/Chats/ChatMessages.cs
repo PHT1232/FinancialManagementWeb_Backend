@@ -11,7 +11,6 @@ namespace EntityFramework.DbEntities.Chats
         public long Id { get; set; }
         public long ChatSessionId { get; set; }
         public string ChatMessage { get; set; }
-        public List<string> Pictures { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }

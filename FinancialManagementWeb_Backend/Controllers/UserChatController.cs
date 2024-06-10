@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using ProjectModel.AuthModel;
 using ProjectModel.ChatModels;
 using TeamManagementProject_Backend.Controllers.Hubs;
@@ -51,7 +52,7 @@ namespace TeamManagementProject_Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRecentChatMessage(string chatSessionId) 
         {
-            
+            throw new NotImplementedException();
         }
 
         [AllowAnonymous]

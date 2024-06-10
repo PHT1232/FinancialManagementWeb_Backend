@@ -66,7 +66,7 @@ namespace TeamManagementProject_Backend.Controllers.Users
             return Ok("Tạo người dùng mới thành công!");
         }
 
-        [Authorize(Roles = ApplicationRole.Admin)]
+        [AllowAnonymous]
         [Route("admin-register")]
         [HttpPost]
         public async Task<IActionResult> RegisterAdmin([FromBody] ApplicationUser model)

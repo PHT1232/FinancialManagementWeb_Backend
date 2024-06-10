@@ -23,7 +23,15 @@ namespace TeamManagementProject_Backend.Controllers.File
     
         [HttpGet]
         public IActionResult GetUserProfile(string user, string fileName) {
-            string filePath = Path.Combine(AppFolders.UserProfilePictures + "/" + user, fileName);
+            string filePath = "";
+            
+            if (fileName == null)
+            {
+                filePath = Path.Combine(AppFolders.UserDefaultProfilePictures + "/", "icons8-user-default-96.png");
+            } else 
+            {
+                filePath = Path.Combine(AppFolders.UserProfilePictures + "/" + user, fileName);
+            }
 
             byte[] buffer = System.IO.File.ReadAllBytes(filePath);
             var file = File(buffer, "image/jpeg");

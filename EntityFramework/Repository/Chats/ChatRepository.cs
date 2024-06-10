@@ -46,16 +46,15 @@ namespace EntityFramework.Repository.Chats
         {
             List<ChatSession> recentUserFromChatRepo = await _dbContext.ChatSession
                 .Where(e => e.FirstUserId == userId || e.SecondUserId == userId)
-                .Select(e => new ChatSession 
-                { 
-                    Id = 
-                })
                 .ToListAsync();
 
             return recentUserFromChatRepo;
         }
 
-        public async Task<IEnumerable> 
+        public async Task<IEnumerable<ChatMessages>> GetRecentChatMessagesUser(long chatSessionId)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task Update(ChatMessages entity, long id)
         {
