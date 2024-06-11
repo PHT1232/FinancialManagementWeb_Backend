@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using EntityFramework.DbEntities;
 using EntityFramework.Repository.Pictures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,12 +15,12 @@ namespace TeamManagementProject_Backend.Controllers.Users
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
         private readonly IPicturesRepository _picturesRepository;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
 
-        public UserController(UserManager<IdentityUser> userManager
+        public UserController(UserManager<CustomUser> userManager
             , IPicturesRepository pictureRepository
             , RoleManager<IdentityRole> roleManager
             , IConfiguration config) 
@@ -47,12 +48,12 @@ namespace TeamManagementProject_Backend.Controllers.Users
                 throw new("Email này đã được sử dụng");
             }
 
-            IdentityUser user = new()
+            CustomUser user = new()
             {
+                UserRealName = model.UserRealName,
                 UserName = model.UserName,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -77,12 +78,12 @@ namespace TeamManagementProject_Backend.Controllers.Users
                 throw new("Người dùng đã tồn tại");
             }
 
-            IdentityUser user = new()
+            CustomUser user = new()
             {
+                UserRealName = "admin",
                 UserName = model.UserName,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
