@@ -23,14 +23,60 @@ namespace TeamManagementProject_Backend.Controllers
         private readonly IChatRepository _chatRepository;
         private readonly IPicturesRepository _picturesRepository;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHubContext<ChatHub> _hubContext;
 
         public UserChatController(IChatRepository chatRepository
             , IPicturesRepository pictureRepository
-            , UserManager<IdentityUser> userManager) 
+            , UserManager<IdentityUser> userManager
+            , IHubContext<ChatHub> hubContext) 
         {
             _chatRepository = chatRepository;
             _picturesRepository = pictureRepository;
             _userManager = userManager;
+            _hubContext = hubContext;
+        }
+
+        [Authorize]
+        [Route("SendMessage")]
+        [HttpPost]
+        public async Task<IActionResult> SendMessage([FromBody] ChatMessageModel chatModel)
+        {
+            if (chatModel == null)
+            {
+                throw new("Chat is this real ?");
+            }
+            var user = await _userManager.FindByNameAsync(chatModel.SentId);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(chatModel.SentId);
+            }
+
+            long chatSessionid = chatModel.ChatSessionId;
+
+            if (chatSessionid == 0)
+            {
+                ChatSession chatSession = new ChatSession
+                {
+                    FirstUserId = chatModel.SentId,
+                    SecondUserId = chatModel.ReceivedId,
+                    CreatedDate = new DateTime().Date,
+                };
+                chatSessionid = await _chatRepository.AddSessionAndGetId(chatSession);
+            }
+
+
+            ChatMessages chat = new ChatMessages
+            {
+                ChatSessionId = chatSessionid,
+                ChatMessage = chatModel.Message,
+                CreatedDate = new DateTime().Date
+            };
+
+            await _chatRepository.AddMessages(chat);
+
+            var list = await _chatRepository.GetAll();
+            await _hubContext.Clients.User(chatModel.SentId).SendAsync("TransferChartData", list);
+            return Ok();
         }
 
         [Authorize]
@@ -52,6 +98,7 @@ namespace TeamManagementProject_Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRecentChatMessage(string chatSessionId) 
         {
+
             throw new NotImplementedException();
         }
 

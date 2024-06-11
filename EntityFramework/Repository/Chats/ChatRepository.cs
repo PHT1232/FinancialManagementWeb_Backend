@@ -18,10 +18,20 @@ namespace EntityFramework.Repository.Chats
             _dbContext = dbContext;
         }
 
-        public async Task Add(ChatMessages entity)
+        public async Task AddMessages(ChatMessages entity)
         {
             await _dbContext.Chats.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<long> AddSessionAndGetId(ChatSession entity)
+        {
+            await _dbContext.ChatSession.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+
+            long id = entity.Id;
+
+            return id; 
         }
 
         public void Delete(ChatMessages entity)
@@ -53,7 +63,10 @@ namespace EntityFramework.Repository.Chats
 
         public async Task<IEnumerable<ChatMessages>> GetRecentChatMessagesUser(long chatSessionId)
         {
-            throw new NotImplementedException();
+            List<ChatMessages> chats = await _dbContext.Chats.
+                Where(e => e.ChatSessionId == chatSessionId).ToListAsync();
+
+            return chats;
         }
 
         public async Task Update(ChatMessages entity, long id)

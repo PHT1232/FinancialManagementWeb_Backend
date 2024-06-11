@@ -13,7 +13,8 @@ namespace EntityFramework.Repository.Chats
         Task<IEnumerable<ChatMessages>> GetAll();
         Task<ChatMessages> Get(long id);
         Task<IEnumerable<ChatSession>> GetRecentChatUser(string userId);
-        Task Add(ChatMessages entity);
+        Task AddMessages(ChatMessages entity);
+        Task<long> AddSessionAndGetId(ChatSession entity);
         Task Update(ChatMessages entity, long id);
         void Delete(ChatMessages entity);
     }

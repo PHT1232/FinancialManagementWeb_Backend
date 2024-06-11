@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProjectModel.ChatModels
 {
-    public class ChatMessage
+    public class ChatMessageModel
     {
+        public long ChatSessionId { get; set; }
         public string SentId { get; set; }
         public string ReceivedId { get; set; }
         public string Message { get; set; }

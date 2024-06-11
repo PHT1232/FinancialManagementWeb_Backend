@@ -5,5 +5,6 @@ namespace EntityFramework.DbEntities.Chats
         public long Id { get; set; }
         public string FirstUserId { get; set; }
         public string SecondUserId { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }
