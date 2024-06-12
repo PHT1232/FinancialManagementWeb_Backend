@@ -15,6 +15,7 @@ using EntityFramework.Repository.Groups;
 using Microsoft.Extensions.FileProviders;
 using EntityFramework.Repository.Pictures;
 using TeamManagementProject_Backend.Global;
+using EntityFramework.DbEntities;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -34,7 +35,7 @@ builder.Services.AddSignalR(e => {
     e.MaximumReceiveMessageSize = 102400000;
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<CustomUser, IdentityRole>()
     .AddEntityFrameworkStores<ProjectDbContext>()
     .AddDefaultTokenProviders();
 

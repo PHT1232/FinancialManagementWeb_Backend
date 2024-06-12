@@ -1,4 +1,5 @@
-﻿using EntityFramework.DbEntities.Chats;
+﻿using EntityFramework.DbEntities;
+using EntityFramework.DbEntities.Chats;
 using EntityFramework.DbEntities.Groups;
 using EntityFramework.DbEntities.Pictures;
 using EntityFramework.DbEntities.ReceiptComponents;
@@ -8,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EntityFramework
 {
-    public class ProjectDbContext : IdentityDbContext<IdentityUser>
+    public class ProjectDbContext : IdentityDbContext<CustomUser>
     {
-        public ProjectDbContext(DbContextOptions options) 
+        public ProjectDbContext(DbContextOptions<ProjectDbContext> options) 
             : base(options) 
         { 
         }
