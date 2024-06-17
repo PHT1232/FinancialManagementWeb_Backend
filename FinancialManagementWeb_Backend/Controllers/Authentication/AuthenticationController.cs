@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EntityFramework.DbEntities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,12 +15,12 @@ namespace TeamManagementProject_Backend.Controllers.Authentication
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
 
         public AuthenticationController(IConfiguration config
-            , UserManager<IdentityUser> userManager
+            , UserManager<CustomUser> userManager
             , RoleManager<IdentityRole> roleManager)
         {
             _config = config;

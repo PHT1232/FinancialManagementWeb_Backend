@@ -36,7 +36,7 @@ namespace TeamManagementProject_Backend.Controllers
             _hubContext = hubContext;
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [Route("SendMessage")]
         [HttpPost]
         public async Task<IActionResult> SendMessage([FromBody] ChatMessageModel chatModel)

@@ -1,4 +1,5 @@
-﻿using EntityFramework.DbEntities.Pictures;
+﻿using EntityFramework.DbEntities;
+using EntityFramework.DbEntities.Pictures;
 using EntityFramework.Repository.Pictures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,10 +13,10 @@ namespace TeamManagementProject_Backend.Controllers.Upload
     public class UploadController : ControllerBase
     {
         private readonly IPicturesRepository _picturesRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
 
         public UploadController(IPicturesRepository picturesRepository
-            , UserManager<IdentityUser> userManager) 
+            , UserManager<CustomUser> userManager) 
         {
             _picturesRepository = picturesRepository;
             _userManager = userManager;

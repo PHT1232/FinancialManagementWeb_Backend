@@ -52,34 +52,40 @@ namespace TeamManagementProject_Backend.Controllers
             return Ok(new { Message = "Request Completed" });
         }
 
-        // [Authorize]
-        // [Route("SendMessage")]
-        // [HttpPost]
-        // public async Task<IActionResult> SendMessage([FromBody] ChatMessage chatModel)
-        // {
-        //     if (chatModel == null)
-        //     {
-        //         throw new ("Chat is this real ?");
-        //     }
-        //     var user = await _userManager.FindByNameAsync(chatModel.SentId);
-        //     if (user == null)
-        //     {
-        //         user = await _userManager.FindByEmailAsync(chatModel.SentId);
-        //     }
+        [Authorize]
+        [Route("SendMessage")]
+        [HttpPost]
+        public async Task<IActionResult> SendMessage([FromBody] ChatMessageModel chatModel)
+        {
+            if (chatModel == null)
+            {
+                throw new ("Chat is this real ?");
+            }
+            var user = await _userManager.FindByNameAsync(chatModel.SentId);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(chatModel.SentId);
+            }
 
-        //     Chat chat = new Chat
-        //     {
-        //         UserSentId = chatModel.SentId,
-        //         UserOrGroupReceivedId = chatModel.ReceivedId,
-        //         ChatMessage = chatModel.Message,
-        //         CreatedDate = new DateTime().Date,
-        //         ModifiedDate = new DateTime().Date
-        //     };
-        //     await _chatRepository.Add(chat);
+            ChatSession firstUserChatSession = new ChatSession {
+                FirstUserId = chatModel.SentId,
+                SecondUserId = chatModel.ReceivedId,
+                CreatedDate = new DateTime().Date,
+            };
 
-        //     var list = await _chatRepository.GetAll();
-        //     await _hubContext.Clients.User(chatModel.SentId).SendAsync("TransferChartData", list);
-        //     return Ok();
-        // }
+            ChatSession secondUserChatSession = new ChatSession {
+                FirstUserId = chatModel.ReceivedId,
+                SecondUserId = chatModel.SentId,
+                CreatedDate = new DateTime().Date,             
+            };
+
+            ChatMessages chatMessage = new ChatMessages {
+
+            };
+
+            var list = await _chatRepository.GetAll();
+            await _hubContext.Clients.User(chatModel.SentId).SendAsync("TransferChartData", list);
+            return Ok();
+        }
     }
 }
