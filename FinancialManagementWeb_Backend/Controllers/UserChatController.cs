@@ -1,4 +1,5 @@
-﻿using EntityFramework.DbEntities.Chats;
+﻿using EntityFramework.DbEntities;
+using EntityFramework.DbEntities.Chats;
 using EntityFramework.Repository;
 using EntityFramework.Repository.Chats;
 using EntityFramework.Repository.Pictures;
@@ -14,7 +15,6 @@ using TeamManagementProject_Backend.Global;
 
 namespace TeamManagementProject_Backend.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/user/chat")]
     public class UserChatController : ControllerBase
@@ -22,12 +22,12 @@ namespace TeamManagementProject_Backend.Controllers
         //private readonly IHubContext<ChatHub> _hubContext;
         private readonly IChatRepository _chatRepository;
         private readonly IPicturesRepository _picturesRepository;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<CustomUser> _userManager;
         private readonly IHubContext<ChatHub> _hubContext;
 
         public UserChatController(IChatRepository chatRepository
             , IPicturesRepository pictureRepository
-            , UserManager<IdentityUser> userManager
+            , UserManager<CustomUser> userManager
             , IHubContext<ChatHub> hubContext) 
         {
             _chatRepository = chatRepository;
@@ -45,37 +45,43 @@ namespace TeamManagementProject_Backend.Controllers
             {
                 throw new("Chat is this real ?");
             }
-            var user = await _userManager.FindByNameAsync(chatModel.SentId);
-            if (user == null)
-            {
-                user = await _userManager.FindByEmailAsync(chatModel.SentId);
+            // var user = await _userManager.FindByNameAsync(chatModel.SentId);
+            // if (user == null)
+            // {
+            //     user = await _userManager.FindByEmailAsync(chatModel.SentId);
+            // }
+
+            // long chatSessionid = chatModel.ChatSessionId;
+
+            // if (chatSessionid == 0)
+            // {
+            //     ChatSession chatSession = new ChatSession
+            //     {
+            //         FirstUserId = chatModel.SentId,
+            //         SecondUserId = chatModel.ReceivedId,
+            //         CreatedDate = new DateTime().Date,
+            //     };
+            //     chatSessionid = await _chatRepository.AddSessionAndGetId(chatSession);
+            // }
+
+
+            // ChatMessages chat = new ChatMessages
+            // {
+            //     ChatSessionId = chatSessionid,
+            //     ChatMessage = chatModel.Message,
+            //     CreatedDate = new DateTime().Date
+            // };
+
+            // await _chatRepository.AddMessages(chat);
+
+            // var list = await _chatRepository.GetAll();
+            
+            try {
+                await _hubContext.Clients.User(chatModel.ReceivedId).SendAsync("TransferChartData", "get message");
+
+            } catch (Exception ex) {
+                throw new Exception(ex.ToString());
             }
-
-            long chatSessionid = chatModel.ChatSessionId;
-
-            if (chatSessionid == 0)
-            {
-                ChatSession chatSession = new ChatSession
-                {
-                    FirstUserId = chatModel.SentId,
-                    SecondUserId = chatModel.ReceivedId,
-                    CreatedDate = new DateTime().Date,
-                };
-                chatSessionid = await _chatRepository.AddSessionAndGetId(chatSession);
-            }
-
-
-            ChatMessages chat = new ChatMessages
-            {
-                ChatSessionId = chatSessionid,
-                ChatMessage = chatModel.Message,
-                CreatedDate = new DateTime().Date
-            };
-
-            await _chatRepository.AddMessages(chat);
-
-            var list = await _chatRepository.GetAll();
-            await _hubContext.Clients.User(chatModel.SentId).SendAsync("TransferChartData", list);
             return Ok();
         }
 
@@ -84,13 +90,13 @@ namespace TeamManagementProject_Backend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRecentChatUser(string userId)
         {
-            IEnumerable<ChatSession> recentUserId = await _chatRepository.GetRecentChatUser(userId);
-            IEnumerable<IdentityUser> recentUser = from user in recentUserId
-                                                   join userInDb in _userManager.Users
-                                                   on userId = user.FirstUserId == null ? user.SecondUserId : user.FirstUserId equals userInDb.Id
-                                                   select userInDb;
-
-            return Ok(recentUser);
+            // IEnumerable<ChatSession> recentUserId = await _chatRepository.GetRecentChatUser(userId);
+            // IEnumerable<IdentityUser> recentUser = from user in recentUserId
+            //                                        join userInDb in _userManager.Users
+            //                                       <CustomUser> on userId = user.FirstUserId == null ? user.SecondUserId : user.FirstUserId equals userInDb.Id
+            //                                        select userInDb;
+            throw new NotImplementedException();
+            // return Ok(recentUser);
         }
 
         [Authorize]
