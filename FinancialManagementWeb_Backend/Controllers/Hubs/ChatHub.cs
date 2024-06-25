@@ -23,7 +23,7 @@ namespace TeamManagementProject_Backend.Controllers.Hubs
             => await Clients.All.SendAsync("TransferChartData", user, message);
     
         public async Task GetConnectedUser()
-            => await Clients.All.SendAsync("connected", Context.User);
+            => await Clients.All.SendAsync("connected", users[0]);
             
     }
 }
