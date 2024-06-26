@@ -19,11 +19,8 @@ namespace TeamManagementProject_Backend.Controllers.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(string user, string message)
-            => await Clients.All.SendAsync("TransferChartData", user, message);
-    
         public async Task GetConnectedUser()
-            => await Clients.All.SendAsync("connected", users[0]);
+            => await Clients.All.SendAsync("connected", users);
             
     }
 }

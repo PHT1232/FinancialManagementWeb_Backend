@@ -45,39 +45,40 @@ namespace TeamManagementProject_Backend.Controllers
             {
                 throw new("Chat is this real ?");
             }
-            // var user = await _userManager.FindByNameAsync(chatModel.SentId);
-            // if (user == null)
-            // {
-            //     user = await _userManager.FindByEmailAsync(chatModel.SentId);
-            // }
+            
+            var user = await _userManager.FindByNameAsync(chatModel.SentId);
+            if (user == null)
+            {
+                user = await _userManager.FindByEmailAsync(chatModel.SentId);
+            }
 
-            // long chatSessionid = chatModel.ChatSessionId;
+            long chatSessionid = chatModel.ChatSessionId;
 
-            // if (chatSessionid == 0)
-            // {
-            //     ChatSession chatSession = new ChatSession
-            //     {
-            //         FirstUserId = chatModel.SentId,
-            //         SecondUserId = chatModel.ReceivedId,
-            //         CreatedDate = new DateTime().Date,
-            //     };
-            //     chatSessionid = await _chatRepository.AddSessionAndGetId(chatSession);
-            // }
+            if (chatSessionid == 0)
+            {
+                ChatSession chatSession = new ChatSession
+                {
+                    FirstUserId = chatModel.SentId,
+                    SecondUserId = chatModel.ReceivedId,
+                    CreatedDate = DateTime.Now,
+                };
+                chatSessionid = await _chatRepository.AddSessionAndGetId(chatSession);
+            }
 
 
-            // ChatMessages chat = new ChatMessages
-            // {
-            //     ChatSessionId = chatSessionid,
-            //     ChatMessage = chatModel.Message,
-            //     CreatedDate = new DateTime().Date
-            // };
+            ChatMessages chat = new ChatMessages
+            {
+                ChatSessionId = chatSessionid,
+                ChatMessage = chatModel.Message,
+                CreatedDate = DateTime.Now
+            };
 
-            // await _chatRepository.AddMessages(chat);
+            await _chatRepository.AddMessages(chat);
 
-            // var list = await _chatRepository.GetAll();
+            var list = await _chatRepository.GetAll();
             
             try {
-                await _hubContext.Clients.User(chatModel.ReceivedId).SendAsync("TransferChartData", "get message");
+                await _hubContext.Clients.User(chatModel.ReceivedId).SendAsync("SendChatMessage", chatModel.ReceivedId, chatModel.Message);
 
             } catch (Exception ex) {
                 throw new Exception(ex.ToString());

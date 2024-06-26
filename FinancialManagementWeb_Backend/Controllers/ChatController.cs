@@ -70,13 +70,13 @@ namespace TeamManagementProject_Backend.Controllers
             ChatSession firstUserChatSession = new ChatSession {
                 FirstUserId = chatModel.SentId,
                 SecondUserId = chatModel.ReceivedId,
-                CreatedDate = new DateTime().Date,
+                CreatedDate = DateTime.Now,
             };
 
             ChatSession secondUserChatSession = new ChatSession {
                 FirstUserId = chatModel.ReceivedId,
                 SecondUserId = chatModel.SentId,
-                CreatedDate = new DateTime().Date,             
+                CreatedDate = DateTime.Now,             
             };
 
             ChatMessages chatMessage = new ChatMessages {
