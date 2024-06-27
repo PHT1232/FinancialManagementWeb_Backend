@@ -78,7 +78,7 @@ namespace TeamManagementProject_Backend.Controllers
             var list = await _chatRepository.GetAll();
             
             try {
-                await _hubContext.Clients.User(chatModel.ReceivedId).SendAsync("SendChatMessage", chatModel.ReceivedId, chatModel.Message);
+                await _hubContext.Clients.User(chatModel.ReceivedId).SendAsync("MessageListener", chatModel.ReceivedId, chatModel.Message);
 
             } catch (Exception ex) {
                 throw new Exception(ex.ToString());
