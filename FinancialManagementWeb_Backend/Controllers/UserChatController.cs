@@ -46,12 +46,6 @@ namespace TeamManagementProject_Backend.Controllers
                 throw new("Chat is this real ?");
             }
             
-            var user = await _userManager.FindByNameAsync(chatModel.SentId);
-            if (user == null)
-            {
-                user = await _userManager.FindByEmailAsync(chatModel.SentId);
-            }
-
             long chatSessionid = chatModel.ChatSessionId;
 
             if (chatSessionid == 0)
@@ -64,7 +58,6 @@ namespace TeamManagementProject_Backend.Controllers
                 };
                 chatSessionid = await _chatRepository.AddSessionAndGetId(chatSession);
             }
-
 
             ChatMessages chat = new ChatMessages
             {
